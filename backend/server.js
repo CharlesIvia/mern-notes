@@ -32,6 +32,20 @@ app.get("/", (req, res) => {
     }
   });
 });
+
+//Create new todo
+
+app.post("/create", (req, res) => {
+  const todo = new Todo(req.body);
+  todo
+    .save()
+    .then((todo) => {
+      res.json(todo);
+    })
+    .catch((err) => {
+      res.status(500).send(err.message);
+    });
+});
 //Listen
 app.listen(PORT, () => {
   console.log("Server is running on port" + PORT);
