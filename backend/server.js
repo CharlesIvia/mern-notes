@@ -26,14 +26,12 @@ app.use(express.json());
 
 //Create new todo
 
-app.get("/create", (req, res) => {
-  const todo = new Todo({
-    text: "Doing it",
-  });
+app.post("/create", (req, res) => {
+  const todo = new Todo(req.body);
   todo
     .save()
     .then((todo) => {
-      res.send(todo);
+      res.json(todo);
     })
     .catch((err) => {
       res.status(500).send(err.message);
