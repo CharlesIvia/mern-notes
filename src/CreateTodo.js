@@ -4,7 +4,9 @@ import { useForm } from "react-hook-form";
 const CreateTodo = () => {
   const { register, handleSubmit } = useForm();
 
-
+  const onSubmit = handleSubmit((data) => {
+    alert(JSON.stringify(data));
+  });
   return (
     <div className="container">
       <div className="mt-3">
