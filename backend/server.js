@@ -7,7 +7,7 @@ const app = express();
 
 //Connect to Db
 const dbURL =
-  "mongodb+srv://gatsby:gatsby2020@cluster0.holkp.mongodb.net/node-blog?retryWrites=true&w=majority";
+  "mongodb+srv://gatsby:gatsby2020@cluster0.holkp.mongodb.net/todo?retryWrites=true&w=majority";
 
 mongoose
   .connect(dbURL, {
@@ -23,28 +23,40 @@ app.use(cors());
 app.use(express.json());
 
 //Routes
-app.get("/", (req, res) => {
-  Todo.find((err, todos) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.json(todos);
-    }
-  });
-});
 
 //Create new todo
 
-app.post("/create", (req, res) => {
-  const todo = new Todo(req.body);
+app.get("/create", (req, res) => {
+  const todo = new Todo({
+    text: "Doing it",
+  });
   todo
     .save()
     .then((todo) => {
-      res.json(todo);
+      res.send(todo);
     })
     .catch((err) => {
       res.status(500).send(err.message);
     });
+});
+
+app.get("/", (req, res) => {
+  Todo.find()
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+//Get Specific
+
+app.get("/:id", (req, res) => {
+  const id = req.params.id;
+  Todo.findById(id, (err, todo) => {
+    res.json(todo);
+  });
 });
 //Listen
 app.listen(PORT, () => {
