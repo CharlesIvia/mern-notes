@@ -2,8 +2,20 @@ import React from "react";
 import TodoForm from "./TodoForm";
 
 const CreateTodo = () => {
+  const createTodo = async (todo) => {
+    let res = await fetch("http://localhost:4000/create", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(todo),
+    });
+    let jsonFormat = await res.json();
+    console.log(jsonFormat);
+  };
   const onSubmit = (data) => {
-    alert(JSON.stringify(data));
+    createTodo(data);
   };
 
   return (
