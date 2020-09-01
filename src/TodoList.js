@@ -5,11 +5,14 @@ const TodoList = () => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    setItems([
-      { text: "foo", id: 0 },
-      { text: "bars", id: 1 },
-      { text: "bazz", id: 2 },
-    ]);
+    const myData = async () => {
+      let res = await fetch("http://localhost:4000");
+      let jsonFormat = await res.json();
+      console.log(jsonFormat);
+      setItems(jsonFormat);
+    };
+
+    myData();
   }, []);
   return (
     <div className="container">
