@@ -8,7 +8,6 @@ const TodoList = () => {
     const myData = async () => {
       let res = await fetch("http://localhost:4000");
       let jsonFormat = await res.json();
-      console.log(jsonFormat);
       setItems(jsonFormat);
     };
 
